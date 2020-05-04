@@ -910,6 +910,11 @@ uint8_t reconstruct_single_channel(NeAACDecStruct *hDecoder, ic_stream *ics,
     output_channels = 1;
 #endif
 
+    fprintf(stderr, "hDecoder->fr_ch_ele %d outp %d outpchan %d\n",
+            hDecoder->fr_ch_ele,
+            hDecoder->element_output_channels[hDecoder->fr_ch_ele],
+            output_channels);
+
     if (hDecoder->element_output_channels[hDecoder->fr_ch_ele] == 0)
     {
         /* element_output_channels not set yet */

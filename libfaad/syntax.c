@@ -368,6 +368,22 @@ static void decode_sce_lfe(NeAACDecStruct *hDecoder,
         else
             hDecoder->internal_channel[channels] = channels;
     }
+    printf("alloced:  ");
+    for(int i=0; i<MAX_SYNTAX_ELEMENTS; i++)
+    printf("%2.2d ", hDecoder->element_alloced[i]);
+    printf("\n");
+    printf("ps used:  ");
+for(int i=0; i<MAX_SYNTAX_ELEMENTS; i++)
+    printf("%2.2d ", hDecoder->ps_used[i]);
+printf("\n");
+    printf("output:   ");
+    for(int i=0; i<MAX_SYNTAX_ELEMENTS; i++)
+    printf("%2.2d ", hDecoder->element_output_channels[i]);
+    printf("\n");
+    printf("channels: ");
+for(int i=0; i<MAX_SYNTAX_ELEMENTS; i++)
+    printf("%2.2d ", hDecoder->internal_channel[i]);
+printf("\n");
 
     hDecoder->fr_channels += hDecoder->element_output_channels[hDecoder->fr_ch_ele];
     hDecoder->fr_ch_ele++;
@@ -432,7 +448,7 @@ void raw_data_block(NeAACDecStruct *hDecoder, NeAACDecFrameInfo *hInfo,
 {
     uint8_t id_syn_ele;
     uint8_t ele_this_frame = 0;
-
+printf("******\n");
     hDecoder->fr_channels = 0;
     hDecoder->fr_ch_ele = 0;
     hDecoder->first_syn_ele = 25;
@@ -446,6 +462,7 @@ void raw_data_block(NeAACDecStruct *hDecoder, NeAACDecFrameInfo *hInfo,
         while ((id_syn_ele = (uint8_t)faad_getbits(ld, LEN_SE_ID
             DEBUGVAR(1,4,"NeAACDecDecode(): id_syn_ele"))) != ID_END)
         {
+printf("id_syn_ele %d\n", id_syn_ele);
             switch (id_syn_ele) {
             case ID_SCE:
                 ele_this_frame++;
